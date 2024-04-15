@@ -3,9 +3,10 @@ set -ex
 PWD=$(dirname $(realpath $BASH_SOURCE))
 . $PWD/flag.sh
 # TARGET=$(rustc -vV | sed -n 's|host: ||p')
+
+cd $PWD/..
 rm -rf bin/*
 mkdir -p bin
-
 cargo build \
   --release \
   --out-dir bin \
