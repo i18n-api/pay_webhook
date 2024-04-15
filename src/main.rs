@@ -1,3 +1,6 @@
+#[global_allocator]
+static MALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+
 mod hook;
 
 use aok::{Result, OK};

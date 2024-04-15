@@ -7,6 +7,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      repository-projects: write
+      contents: write
     name: build
     strategy:
       matrix:
@@ -19,6 +22,19 @@ jobs:
       #   with:
       #     xcode-version: latest-stable
       # - uses: GuillaumeFalourd/setup-rsync@v1.2
+      - name: checkout private conf
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-cron/conf
+          token: ${{ secrets.GH_PAT }}
+          path: conf
+      - name: checkout srv
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-api/srv
+          path: srv
+          set-safe-directory: false
+          lfs: true
       - name: checkout srv/mod/pub
         uses: actions/checkout@v4
         with:
@@ -30,6 +46,7 @@ jobs:
         with:
           set-safe-directory: false
           lfs: true
+          path: me
       # - name: Install Protoc
       #   if: runner.os != 'macOS'
       #   uses: arduino/setup-protoc@v3
@@ -50,6 +67,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cd sh
-          ./github.dist.sh
+          me/sh/github.dist.sh
 
+          mkdir -p ~/.ssh
+          cp conf/ssh_config ~/.ssh
+          chmod 700 ~/.ssh
+          chmod -R 600 ~/.ssh/*
+          . conf/ssl/env/ssh.sh
+          export SSHPASS
+          . conf/api_srv.sh
+          export API_SRV
+          me/sh/deploy.sh
