@@ -12,7 +12,7 @@ REPO=${REPO%.git}
 
 URL=https://raw.githubusercontent.com/i18n-ops/ops/main/curl.setup.sh
 
-ssh="sshpass -e ssh -q -o StrictHostKeyChecking=no -F ~/.ssh/config"
+ssh="sshpass -e ssh -q -o StrictHostKeyChecking=no"
 
 for srv in $API_SRV; do
   $ssh $srv "curl -sSf $URL|bash -s -- $REPO $VER"
