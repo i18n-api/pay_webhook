@@ -73,12 +73,4 @@ jobs:
       - name: 部署到线上服务器
         shell: bash
         run: |
-          mkdir -p ~/.ssh
-          cp conf/ssh_config ~/.ssh/config
-          chmod 700 ~/.ssh
-          chmod -R 600 ~/.ssh/*
-          . conf/ssl/env/ssh.sh
-          export SSHPASS
-          . conf/api_srv.sh
-          export API_SRV
-          me/sh/deploy.sh
+          me/sh/deploy.sh $(pwd)/conf
