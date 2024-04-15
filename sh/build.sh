@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
+
+DIR=$(realpath $0) && DIR=${DIR%/*}
+cd $DIR
 set -ex
-PWD=$(dirname $(realpath $BASH_SOURCE))
-. $PWD/flag.sh
-# TARGET=$(rustc -vV | sed -n 's|host: ||p')
-
-cd $PWD/..
-rm -rf bin/*
-mkdir -p bin
-cargo build \
-  --release \
-  --out-dir bin \
-  -Z unstable-options
-
-cargo sweep --installed
-cargo sweep --time 30
+export RUSTFLAGS='--cfg reqwest_unstable -C target-feature=+aes'
+crate_build.sh

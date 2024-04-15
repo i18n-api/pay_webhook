@@ -8,7 +8,7 @@ Restart=on-failure
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=70
 RestartSec=1
-ExecStart=DIR/sh/pay_webhook.sh
+ExecStart=/opt/bin/pay_webhook.sh
 
 [Install]
 WantedBy=multi-user.target
