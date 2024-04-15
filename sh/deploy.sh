@@ -10,8 +10,10 @@ REPO=$(git config --get remote.origin.url | awk -F '[:/]' -v OFS='/' '{print $(N
 
 REPO=${REPO%.git}
 
-URL=https://raw.githubusercontent.com/$REPO/main/sh/curl.setup.sh
+URL=https://raw.githubusercontent.com/i18n-ops/ops/main/curl.setup.sh
+
+ssh="sshpass -e ssh -q -o StrictHostKeyChecking=no"
 
 for srv in $API_SRV; do
-  ssh $srv "curl -sSf $URL|bash -s -- $REPO $VER"
+  $ssh $srv "curl -sSf $URL|bash -s -- $REPO $VER"
 done
