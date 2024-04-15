@@ -11,6 +11,7 @@ msg=$(git log -1 --pretty=format:'%B' $branch)
 
 if ! [[ $msg =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   gme $@
+  cd ..
   cargo v patch -y
   if [ "$branch" != "main" ]; then
     git push
