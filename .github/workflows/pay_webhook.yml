@@ -1,0 +1,17 @@
+name: pay_webhook
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      repository-projects: write
+      contents: write
+    uses: ./.github/workflows/build.yml
+    with:
+      name: pay_webhook
+    secrets: inherit
