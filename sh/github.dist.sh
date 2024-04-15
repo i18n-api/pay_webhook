@@ -5,9 +5,6 @@ cd $DIR
 ROOT=${ROOT%/*}
 set -ex
 
-ls ../../srv/mod/
-ls ../../srv/mod/pub
-
 ./build.sh
 
 DIROS=$DIR/dist/os
