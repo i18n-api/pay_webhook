@@ -48,12 +48,12 @@ jobs:
       #     repo-token: ${{ github.token }}
 
       - name: rust-toolchain
-        uses: actions-rs/toolchain@v1.0.6
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
             # https://github.com/dalek-cryptography/curve25519-dalek/issues/618
             toolchain: nightly
             # toolchain: nightly-2024-05-04
-            override: true
+            cache: false
             components: rust-src
             # components: rustfmt, clippy
       - name: github release

@@ -15,8 +15,9 @@ cd dist
 find . -type f | xargs -I {} mv {} os/opt/bin
 cd ..
 
-NAME=$(cargo metadata --format-version=1 --no-deps | jq -r '.packages[0].name')
-VER=$(cargo metadata --format-version=1 --no-deps | jq -r '.packages[0].version')
+META=$(cargo metadata --format-version=1 --no-deps | jq '.packages[0] | .name + " " + .version' -r)
+NAME=$(echo $META | cut -d ' ' -f1)
+VER=$(echo $META | cut -d ' ' -f2)
 
 boot=$TO/$NAME.sh
 
