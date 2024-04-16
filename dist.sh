@@ -11,7 +11,7 @@ msg=$(git log -1 --pretty=format:'%B' $branch)
 
 if ! [[ $msg =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 
-  if [ -z "$1" ]; then
+  if ! [ -z "$1" ]; then
     gme $@
   fi
 
