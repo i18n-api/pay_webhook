@@ -27,4 +27,5 @@ if ! [[ $msg =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   git push
   msg=$(git log -1 --pretty=format:'%B' $branch)
   git push github $msg main
+  git checkout $branch
 fi
