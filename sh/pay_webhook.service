@@ -4,7 +4,7 @@ After=network.target kvrocks.service mariadb.service
 
 [Service]
 Type=simple
-Restart=on-failure
+Restart=always
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=70
 RestartSec=1
