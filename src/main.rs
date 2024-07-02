@@ -7,7 +7,7 @@ use aok::{Result, OK};
 use axum::{routing, Router};
 use ping_ver::ping_ver;
 
-genv::def!(PORT:u16 | 2006);
+genv::def!(PORT:u16 | 4242);
 
 #[tokio::main]
 async fn main() -> Result<()> {

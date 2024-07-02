@@ -37,6 +37,7 @@ macro_rules! hook {
                     $($(
                       stripe::EventType::[<$kind $ev>] => {
                         if let EventObject::$kind(data) = data {
+                          tracing::info!("{} {}\n{:?}\n", stringify!($kind), stringify!($ev), data);
                           // dbg!((&event.type_, &data));
                           [<$kind:snake>]::[<$ev:snake>](data).await?;
                           return Ok("".to_owned());
@@ -68,8 +69,8 @@ macro_rules! hook {
 hook!(
   SetupIntent (
     Canceled
-    Succeeded
     SetupFailed
+    Succeeded
   )
   PaymentIntent (
     Canceled
