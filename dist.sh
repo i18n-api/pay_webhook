@@ -5,7 +5,7 @@ cd $DIR
 set -e
 
 branch=$(git symbolic-ref --short -q HEAD)
-gci
+gci || true
 git pull
 msg=$(git log -1 --pretty=format:'%B' $branch)
 
