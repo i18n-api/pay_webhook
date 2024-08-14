@@ -5,6 +5,9 @@ cd $DIR
 ROOT=${ROOT%/*}
 set -ex
 
+curl https://mise.run | sudo MISE_INSTALL_PATH=/usr/bin/mise bash
+mise settings set experimental true
+
 ../../srv/init.sh
 
 ./build.sh
