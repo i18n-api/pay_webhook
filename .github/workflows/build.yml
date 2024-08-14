@@ -17,6 +17,12 @@ jobs:
         # platform: [macos-latest,ubuntu-latest,mac-arm,windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: Install mariadb
+        run: |
+          sudo apt-get install -y mariadb-client
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
       - uses: oven-sh/setup-bun@v1
       # - if: runner.os == 'macOS'
       #   uses: maxim-lobanov/setup-xcode@v1
