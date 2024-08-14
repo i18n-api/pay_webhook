@@ -5,7 +5,7 @@ cd $DIR
 ROOT=${ROOT%/*}
 set -ex
 
-../srv/init.sh
+../../srv/init.sh
 
 ./build.sh
 
