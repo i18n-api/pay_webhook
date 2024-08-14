@@ -17,6 +17,7 @@ jobs:
         # platform: [macos-latest,ubuntu-latest,mac-arm,windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - uses: oven-sh/setup-bun@v1
       # - if: runner.os == 'macOS'
       #   uses: maxim-lobanov/setup-xcode@v1
       #   with:
