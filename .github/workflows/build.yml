@@ -17,6 +17,11 @@ jobs:
         # platform: [macos-latest,ubuntu-latest,mac-arm,windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: Install Protoc
+        if: runner.os != 'macOS'
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ github.token }}
       - name: Install mariadb
         run: |
           sudo apt-get install -y mariadb-client
