@@ -17,6 +17,12 @@ jobs:
         # platform: [macos-latest,ubuntu-latest,mac-arm,windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: clone dist
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-dist/dist
+          token: ${{ secrets.GH_PAT }}
+          path: dist
       - name: Install Protoc
         if: runner.os != 'macOS'
         uses: arduino/setup-protoc@v3
