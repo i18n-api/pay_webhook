@@ -91,19 +91,19 @@ jobs:
         run: |
           sudo mv ops /etc/ops
 
-      - name: github release
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          me/sh/github.dist.sh
-
       - name: checkout dist conf
         uses: actions/checkout@v4
         with:
           repository: i18n-dist/dist
           token: ${{ secrets.GH_PAT }}
           path: dist
+
+      - name: github release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          me/sh/github.dist.sh
 
       - name: 部署到线上服务器
         shell: bash
