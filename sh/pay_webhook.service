@@ -1,0 +1,14 @@
+[Unit]
+Description=pay_webhook
+After=network.target kvrocks.service mariadb.service
+
+[Service]
+Type=simple
+Restart=always
+CPUSchedulingPolicy=rr
+CPUSchedulingPriority=70
+RestartSec=1
+ExecStart=/opt/bin/pay_webhook.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,96 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+
+jobs:
+  build:
+    permissions:
+      repository-projects: write
+      contents: write
+    name: build
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        # platform: [macos-latest,ubuntu-latest,mac-arm,windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Install Protoc
+        if: runner.os != 'macOS'
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ github.token }}
+      - name: Install mariadb
+        run: |
+          sudo apt-get install -y mariadb-client
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: oven-sh/setup-bun@v1
+      # - if: runner.os == 'macOS'
+      #   uses: maxim-lobanov/setup-xcode@v1
+      #   with:
+      #     xcode-version: latest-stable
+      # - uses: GuillaumeFalourd/setup-rsync@v1.2
+      - name: clone conf
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-api/conf-ol
+          path: conf
+          set-safe-directory: false
+          lfs: true
+          token: ${{ secrets.GH_PAT }}
+      - name: checkout srv
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-api/srv
+          path: srv
+          set-safe-directory: false
+          lfs: true
+      - name: checkout srv/mod/pub
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-api/mod.pub
+          path: srv/mod/pub
+          set-safe-directory: false
+          lfs: true
+      - uses: actions/checkout@v4
+        with:
+          set-safe-directory: false
+          lfs: true
+          path: me
+      # - name: Install Protoc
+      #   if: runner.os != 'macOS'
+      #   uses: arduino/setup-protoc@v3
+      #   with:
+      #     repo-token: ${{ github.token }}
+
+      - name: rust-toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+            # https://github.com/dalek-cryptography/curve25519-dalek/issues/618
+            toolchain: nightly
+            # toolchain: nightly-2024-05-04
+            cache: false
+            components: rust-src
+            # components: rustfmt, clippy
+      - name: github release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          me/sh/github.dist.sh
+
+      - name: checkout dist conf
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-dist/dist
+          token: ${{ secrets.GH_PAT }}
+          path: dist
+
+      - name: 部署到线上服务器
+        shell: bash
+        run: |
+          ./me/sh/deploy.sh $(pwd)/dist
