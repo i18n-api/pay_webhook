@@ -22,7 +22,7 @@ cd ..
 
 META=$(cargo metadata --format-version=1 --no-deps | jq '.packages[0] | .name + " " + .version' -r)
 NAME=$(echo $META | cut -d ' ' -f1)
-VER=$(echo $META | cut -d ' ' -f2)
+export VER=$(echo $META | cut -d ' ' -f2)
 
 boot=$TO/$NAME.sh
 
