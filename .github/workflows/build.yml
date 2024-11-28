@@ -108,6 +108,7 @@ jobs:
       - name: 部署到线上服务器
         shell: bash
         run: |
+          set -ex
           cd me
           ver=$(cargo metadata --format-version=1 --no-deps | jq '.packages[0] | .version' -r)
           cd ..
