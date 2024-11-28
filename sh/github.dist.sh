@@ -42,4 +42,4 @@ mkdir -p $sys
 
 cp $NAME.service $sys/
 
-$ROOT/../dist/encrypt.sh $DIROS
+$ROOT/../dist/encrypt.sh $DIROS $ROOT
