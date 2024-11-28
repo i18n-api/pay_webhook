@@ -108,5 +108,7 @@ jobs:
       - name: 部署到线上服务器
         shell: bash
         run: |
+          cd me
           ver=$(cargo metadata --format-version=1 --no-deps | jq '.packages[0] | .version' -r)
+          cd ..
           curl -sSL https://raw.githubusercontent.com/i18n-ops/ops/refs/heads/main/srv/deploy.sh | sudo bash -s pay_webhook $ver
