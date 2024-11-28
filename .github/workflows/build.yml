@@ -76,6 +76,20 @@ jobs:
             cache: false
             components: rust-src
             # components: rustfmt, clippy
+
+      - name: clone ops conf
+        uses: actions/checkout@v4
+        with:
+          repository: i18n-ops/conf
+          path: ops
+          set-safe-directory: false
+          lfs: true
+          token: ${{ secrets.GH_PAT }}
+
+      - name: ops conf →  /etc/ops
+        shell: bash
+          sudo mv ops /etc/ops
+
       - name: github release
         shell: bash
         env:
